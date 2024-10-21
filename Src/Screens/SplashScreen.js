@@ -53,7 +53,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
   },
   textcintainer1: {
-    fontSize: 18,
+    fontSize: 14,
     fontWeight: 'bold',
     color: '#808080',
     textAlign: 'center',
@@ -64,8 +64,9 @@ const styles = StyleSheet.create({
     flexDirection:'column',
   },
   swatsanlogo:{
-    height: 100,
-    width: 120,
+    height: 36,
+    width: 200,
+    maxWidth:200,
 
   },
   imagestyle: {

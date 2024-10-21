@@ -1,10 +1,11 @@
 import {StyleSheet, Text, View} from 'react-native';
 import React from 'react';
+import ProfileProgress from './ProfileProgress';
 
 const HomeComponent = () => {
   return (
     <View>
-      <Text>H</Text>
+      <ProfileProgress />
     </View>
   );
 };

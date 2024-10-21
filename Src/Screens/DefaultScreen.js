@@ -3,7 +3,6 @@ import {Alert, BackHandler, StyleSheet, View} from 'react-native';
 import CustomDrawer from '../Navigation/CustomDrawer';
 import CustomBottomTab from '../Navigation/CustomBottomTab';
 
-
 const DefaultScreen = () => {
   useEffect(() => {
     const backAction = () => {

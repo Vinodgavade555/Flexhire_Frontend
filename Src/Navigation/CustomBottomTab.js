@@ -1,10 +1,10 @@
 import React, {useState} from 'react';
 import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
-import HomeComponent from '../Common/HomeComponent';
 import UserProfile from '../Common/UserProfile';
 import UserInvites from '../Common/UserInvites';
 import UserApplies from '../Common/UserApplies';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import HomeComponent from '../Common/HomeComponent';
 
 const CustomBottomTab = () => {
   const [selectedTab, setSelectedTab] = useState('Home');
@@ -147,14 +147,14 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     height: 60,
     borderTopWidth: 1,
-    borderColor: '#ccc',
-    backgroundColor: '#5e8776',
+    borderColor: '#00334d',
+    backgroundColor: '#00334d',
   },
   tab: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#5e8776',
+    backgroundColor: '#00334d',
     // height: 50,
   },
   tabText: {
@@ -164,13 +164,10 @@ const styles = StyleSheet.create({
   selectedTabText: {
     fontSize: 14,
     fontWeight: 'bold',
-    color: '#5e8776',
-
-    // color: '#FF6F26',
+    color: '#00334d',
   },
   selectedTabicon: {
-    color: '#5e8776',
-    // color:'#FF6F26',
+    color: '#00334d',
   },
   tabicon: {
     color: '#fff',
@@ -179,7 +176,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
   },
   notselectedTab: {
-    backgroundColor: '#5e8776',
+    backgroundColor: '#00334d',
   },
 });
 

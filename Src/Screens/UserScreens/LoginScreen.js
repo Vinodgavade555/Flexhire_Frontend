@@ -17,6 +17,7 @@ import {
 import {Button, Checkbox, TextInput, IconButton} from 'react-native-paper';
 import {Formik} from 'formik';
 import * as Yup from 'yup';
+import GlobalStyle from '../../Global_CSS/GlobalStyle';
 
 const LoginScreen = () => {
   const navigation = useNavigation();
@@ -185,7 +186,7 @@ const LoginScreen = () => {
 
                     <View style={styles.buttonContainer}>
                       <Button
-                        labelStyle={styles.labelStyle}
+                        labelStyle={GlobalStyle.labelStyle}
                         onPress={handleSubmit}>
                         Login
                       </Button>
