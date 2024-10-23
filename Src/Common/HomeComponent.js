@@ -1,5 +1,13 @@
-import React, {useState} from 'react';
-import {ScrollView, StyleSheet, Text, TextInput, View} from 'react-native';
+import React, {useEffect, useState} from 'react';
+import {
+  Alert,
+  BackHandler,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TextInput,
+  View,
+} from 'react-native';
 // import JobcategoriesScrollComponent from '../Components/JobcategoriesScrollComponent';
 import {useNavigation} from '@react-navigation/native';
 import {IconButton} from 'react-native-paper';
@@ -8,6 +16,26 @@ import JobbasedonPreferences from '../Components/JobbasedonPreferences';
 import CompanysList from '../Components/CompanysList';
 
 const HomeComponent = ({jobsData}) => {
+  useEffect(() => {
+    const backAction = () => {
+      Alert.alert('Hold on!', 'Are you sure you want to go back?', [
+        {
+          text: 'Cancel',
+          onPress: () => null,
+          style: 'cancel',
+        },
+        {text: 'YES', onPress: () => BackHandler.exitApp()}, // Use your desired navigation logic here
+      ]);
+      return true; // Prevent default back action
+    };
+
+    const backHandler = BackHandler.addEventListener(
+      'hardwareBackPress',
+      backAction,
+    );
+
+    return () => backHandler.remove(); // Cleanup listener on unmount
+  }, []);
   const navigation = useNavigation();
   const [query, setQuery] = useState('');
 

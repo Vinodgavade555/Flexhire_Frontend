@@ -219,7 +219,7 @@ const styles = StyleSheet.create({
     color: '#fff',
   },
   viewAll: {
-    fontSize: 16,
+    fontSize: 15,
     color: '#80d4ff',
     fontWeight: 'bold',
   },

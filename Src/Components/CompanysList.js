@@ -221,7 +221,7 @@ const styles = StyleSheet.create({
     color: 'black',
   },
   viewAll: {
-    fontSize: 16,
+    fontSize: 15,
     color: '#333',
     fontWeight: 'bold',
   },

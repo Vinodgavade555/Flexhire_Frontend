@@ -1,10 +1,9 @@
-import { Alert, StyleSheet, Text, View } from 'react-native';
-import React, { useState } from 'react';
-import { Button, IconButton, Modal, TextInput } from 'react-native-paper';
-import { Formik } from 'formik';
+import {Modal, StyleSheet, Text, View, ScrollView} from 'react-native';
+import React, {useState} from 'react';
+import {Button, IconButton, TextInput} from 'react-native-paper';
+import {Formik} from 'formik';
 import * as Yup from 'yup';
 import GlobalStyle from '../../Global_CSS/GlobalStyle';
-import ProfileImage from './ProfileImage';
 
 const validationSchema = Yup.object().shape({
   fullName: Yup.string().required('Full Name is required'),
@@ -14,84 +13,114 @@ const validationSchema = Yup.object().shape({
 const Introduction = () => {
   const [modalVisible, setModalVisible] = useState(false);
   const [headlineHeight, setHeadlineHeight] = useState(48); // Initial height
+  const [fullName, setFullName] = useState(''); // State for full name
+  const [profileHeadline, setProfileHeadline] = useState(''); // State for profile headline
 
   const openModal = () => setModalVisible(true);
   const closeModal = () => setModalVisible(false);
 
+  const handleFormSubmit = values => {
+    setFullName(values.fullName);
+    setProfileHeadline(values.profileHeadline);
+    closeModal();
+  };
   return (
     <View style={styles.mainContainer}>
-      <ProfileImage />
-      <IconButton
-        icon="lead-pencil"
-        iconColor="#808080"
-        size={24}
-        onPress={openModal}
-        style={styles.iconButton}
-      />
-      
-      <Modal visible={modalVisible} onDismiss={closeModal}>
-        <Text style={styles.heading}>Introduction</Text>
-        <Formik
-          initialValues={{ fullName: '', profileHeadline: '' }}
-          validationSchema={validationSchema}
-          onSubmit={values => {
-            Alert.alert('Form Submitted', JSON.stringify(values, null, 2));
-            closeModal(); // Close modal after submission
-          }}
-        >
-          {({
-            handleChange,
-            handleBlur,
-            handleSubmit,
-            values,
-            errors,
-            touched,
-          }) => (
-            <View style={styles.container}>
-              <View style={styles.Fullnamecontainer}>
-                <TextInput
-                  mode="outlined"
-                  label="Full Name*"
-                  style={styles.input}
-                  textColor="#333"
-                  outlineColor="lightgray"
-                  activeOutlineColor="gray"
-                  onChangeText={handleChange('fullName')}
-                  onBlur={handleBlur('fullName')}
-                  value={values.fullName}
-                />
-                {errors.fullName && touched.fullName && (
-                  <Text style={styles.error}>{errors.fullName}</Text>
+      <View style={styles.editContainer}>
+        <View></View>
+        <View style={styles.displayContainer}>
+          <Text style={styles.displayFullname}>{fullName}</Text>
+        </View>
+
+        <IconButton
+          icon="lead-pencil"
+          iconColor="#f2f2f2"
+          size={18}
+          onPress={openModal}
+          style={styles.iconButton}
+        />
+      </View>
+      <Text style={styles.displayText}>{profileHeadline}</Text>
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={modalVisible}
+        onRequestClose={closeModal}>
+        <View style={styles.modalBackground}>
+          <View style={styles.modalContainer}>
+            <ScrollView contentContainerStyle={styles.modalContent}>
+              <Text style={styles.heading}>Introduction</Text>
+              <Formik
+                initialValues={{
+                  fullName: fullName,
+                  profileHeadline: profileHeadline,
+                }}
+                validationSchema={validationSchema}
+                onSubmit={handleFormSubmit}>
+                {({
+                  handleChange,
+                  handleBlur,
+                  handleSubmit,
+                  values,
+                  errors,
+                  touched,
+                }) => (
+                  <View style={styles.container}>
+                    <View style={styles.Fullnamecontainer}>
+                      <TextInput
+                        mode="outlined"
+                        label="Full Name*"
+                        style={styles.input}
+                        textColor="#333"
+                        outlineColor="lightgray"
+                        activeOutlineColor="gray"
+                        onChangeText={handleChange('fullName')}
+                        onBlur={handleBlur('fullName')}
+                        value={values.fullName}
+                      />
+                      {errors.fullName && touched.fullName && (
+                        <Text style={styles.error}>{errors.fullName}</Text>
+                      )}
+                    </View>
+                    <View style={styles.headlinecontainer}>
+                      <TextInput
+                        style={[
+                          styles.input,
+                          {height: Math.min(Math.max(48, headlineHeight), 200)}, // Ensures a minimum height of 48 and a max of 200
+                        ]}
+                        mode="outlined"
+                        label="Profile Headline*"
+                        textColor="#333"
+                        outlineColor="lightgray"
+                        activeOutlineColor="gray"
+                        onChangeText={handleChange('profileHeadline')}
+                        onBlur={handleBlur('profileHeadline')}
+                        value={values.profileHeadline}
+                        multiline // Ensure multi-line support
+                        onContentSizeChange={e => {
+                          const contentHeight =
+                            e.nativeEvent.contentSize.height;
+                          setHeadlineHeight(contentHeight); // Dynamically adjust height based on content
+                        }}
+                      />
+                      {errors.profileHeadline && touched.profileHeadline && (
+                        <Text style={styles.error}>
+                          {errors.profileHeadline}
+                        </Text>
+                      )}
+                    </View>
+
+                    <Button
+                      onPress={handleSubmit}
+                      labelStyle={GlobalStyle.labelStyle}>
+                      Submit
+                    </Button>
+                  </View>
                 )}
-              </View>
-              <View style={styles.headlinecontainer}>
-                <TextInput
-                  style={[styles.input, { height: headlineHeight }]}
-                  mode="outlined"
-                  label="Profile Headline*"
-                  textColor="#333"
-                  outlineColor="lightgray"
-                  activeOutlineColor="gray"
-                  onChangeText={handleChange('profileHeadline')}
-                  onBlur={handleBlur('profileHeadline')}
-                  value={values.profileHeadline}
-                  multiline
-                  onContentSizeChange={(contentSize) => {
-                    if (contentSize && contentSize.contentSize) {
-                      setHeadlineHeight(contentSize.contentSize.height + 20); // Add some padding
-                    }
-                  }}
-                />
-                {errors.profileHeadline && touched.profileHeadline && (
-                  <Text style={styles.error}>{errors.profileHeadline}</Text>
-                )}
-              </View>
-              <Button onPress={handleSubmit} labelStyle={GlobalStyle.labelStyle}>
-                Submit
-              </Button>
-            </View>
-          )}
-        </Formik>
+              </Formik>
+            </ScrollView>
+          </View>
+        </View>
       </Modal>
     </View>
   );
@@ -100,7 +129,30 @@ const Introduction = () => {
 const styles = StyleSheet.create({
   mainContainer: {
     flex: 1,
-    margin: 18,
+    marginHorizontal: 12,
+    borderRadius: 8,
+    backgroundColor: '#00334d',
+    elevation: 2,
+  },
+  editContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignContent: 'center',
+  },
+  iconButton: {},
+  modalBackground: {
+    flex: 1,
+    // justifyContent: 'flex-end',
+    backgroundColor: 'rgba(0, 0, 0, 0.5)', // Semi-transparent background
+  },
+  modalContainer: {
+    height: '100%',
+    backgroundColor: 'white',
+    borderRadius: 8,
+  },
+  modalContent: {
+    justifyContent: 'center',
+    margin: 12,
   },
   heading: {
     fontSize: 24,
@@ -109,8 +161,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   container: {
-    flex: 1,
-    padding: 20,
+    marginVertical: 12,
   },
   Fullnamecontainer: {
     marginVertical: 12,
@@ -120,12 +171,31 @@ const styles = StyleSheet.create({
   },
   input: {
     backgroundColor: '#fff',
-    minHeight: 48,
-    maxHeight: 200,
+    minHeight: 48, // Ensures the input field always has at least this height
+    borderRadius: 8,
   },
   error: {
     color: 'red',
-    marginBottom: 10,
+    marginVertical: 6,
+  },
+  displayContainer: {
+    marginTop: 12,
+    // height: 'auto',
+    alignItems: 'center',
+  },
+
+  displayFullname: {
+    marginLeft: 24,
+    fontSize: 18,
+    color: '#ffffff',
+    fontWeight: 'bold',
+  },
+  displayText: {
+    marginHorizontal: 12,
+    textAlign: 'center',
+    marginBottom: 12,
+    fontSize: 14,
+    color: '#ffffff',
   },
 });
 

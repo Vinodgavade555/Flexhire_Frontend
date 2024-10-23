@@ -1,14 +1,38 @@
-import {StyleSheet, View} from 'react-native';
+import {StyleSheet, View, ScrollView} from 'react-native';
 import React from 'react';
 import Introduction from './Introduction';
+import ProfileImage from './ProfileImage';
+import Basicdetails from './Basicdetails';
+import Profilesummary from './Profilesummary';
+import Professionaldetails from './Professionaldetails';
+import Keyskills from './Keyskills';
+import Personaldetails from './Personaldetails';
 
 const Index = () => {
   return (
-    <View style={styles.mainContainer}>
-      <View>
+    <ScrollView style={styles.mainContainer}>
+      <View style={{marginVertical: 12}}>
+        <ProfileImage />
+      </View>
+      <View style={{}}>
         <Introduction />
       </View>
-    </View>
+      <View style={{}}>
+        <Basicdetails />
+      </View>
+      <View style={{}}>
+        <Profilesummary />
+      </View>
+      <View style={{}}>
+        <Professionaldetails />
+      </View>
+      <View style={{}}>
+        <Keyskills />
+      </View>
+      <View style={{}}>
+        <Personaldetails />
+      </View>
+    </ScrollView>
   );
 };
 
@@ -18,6 +42,6 @@ const styles = StyleSheet.create({
   mainContainer: {
     flex: 1,
     width: '100%',
-    backgroundColor: '#f2f2f2',
+    backgroundColor: '#004466',
   },
 });
